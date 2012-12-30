@@ -1,4 +1,4 @@
 bf_IDE
 ======
 
-Breinfucking IDE an IDE/Interpreter for Brainfuck
+Brainfucking IDE an IDE/Interpreter for Brainfuck
