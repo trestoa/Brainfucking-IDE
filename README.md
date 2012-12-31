@@ -57,5 +57,5 @@ The Brainfucking IDE ist licensed under the [MIT License](http://klein-server.at
 Links
 -----
 
-*[Wikipedia entry about Brainfuck](http://en.wikipedia.org/wiki/Brainfuck "Brainfuck")
-*[Esolangs entry about Brainfuck] (http://esolangs.org/wiki/Brainfuck "Brainfuck")
+* [Wikipedia entry about Brainfuck](http://en.wikipedia.org/wiki/Brainfuck "Brainfuck")
+* [Esolangs entry about Brainfuck] (http://esolangs.org/wiki/Brainfuck "Brainfuck")
