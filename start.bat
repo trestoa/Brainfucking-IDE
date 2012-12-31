@@ -1,1 +1,1 @@
-java -cp bin main.BrainfuckingIDE
+java -jar BrainfuckingIDE.jar
