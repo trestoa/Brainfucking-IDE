@@ -1,3 +1,6 @@
-javac ./src/main/*.java
-jar -cfv BrainfuckingIDE.jar ./src/main/*.class 
-del ./src/main/*.class 
+cd ./src
+javac ./main/*.java
+jar cef main.BrainfuckingIDE BrainfuckingIDE.jar ./main/*.class 
+mv BrainfuckingIDE.jar ..
+cd ./main/
+del *.class
