@@ -1,18 +1,4 @@
-
-starting...
-creating memory...success
-creating memorypointer...success
-reading code...success
-prepare for interpreting...
-compiling code...success
-interpreting...
-
-
-
-code == {,>,[-<+>]<[->+<]>[>+<-<+>]>[>>>>>[->+<]>+<<<<<++++++++++<[->>+<-[>>>]>[[<+>-]>+>>]<<<<<]>[-]>[-<<+>>]>[-<<+>>]<<]>>>>>[<<<<+++++++[-<+++++++>]<-[<+>-]<.[-]>>>>>>[-<+>]<-]<<<<<<<}
-Character: ,
-Action: reading next token byte
-markus@markus-M14xR1:~/Arbeitsfläche$ java -cp bin main.Brainfuck -d bfSamples/addition.b
+﻿
 starting...
 creating memory...success
 creating memorypointer...success
