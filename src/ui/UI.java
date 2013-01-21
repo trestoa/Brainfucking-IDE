@@ -53,7 +53,7 @@ public class UI implements ActionListener{
 	public static final String OPENPREFS = "openPrefs";
 	public static final String EMPTYFILE = "Untitled Brainfuck File";
 	public static final String INPUT = "input";
-	public static final String OPENTEXTGENERATOR = "openTebxtGenerator";
+	public static final String OPENTEXTGENERATOR = "openTextGenerator";
 	
 	public String fileName = EMPTYFILE;	
 	public JFileChooser fileChooser;
