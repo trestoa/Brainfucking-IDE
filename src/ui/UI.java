@@ -67,7 +67,7 @@ public class UI implements ActionListener{
 		mainFrame = new MainFrame("Brainfucking IDE");
 		mainFrame.setActionListener(this);
 		mainFrame.setVisible(true);
-		terminal = new Terminal("Brinfucking Terminal");
+		terminal = new Terminal("Brainfucking Terminal");
 		terminal.setActionListener(this);
 		gen = new TextGenerator();
 	}

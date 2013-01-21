@@ -52,7 +52,7 @@ If you´ve got Git with this:
 `git clone https://github.com/kleiinnn/Brainfucking-IDE.git`
 You don´t want to install Git? Download the IDE as [zip](http://github.com/kleiinnn/Brainfucking-IDE/archive/master.zip "BrainfuckingIDE Repo as zip file") or visit the [Github page](https://github.com/kleiinnn/Brainfucking-IDE "Github page of Brainfucking IDE")
 
-For the just-use version download [this](http://mklein.co.at/files/BrainfuckingIDE/final_1.0.0.tar.bz2 "just version of BrainfuckingIDE")
+For the just-use version download [this](http://mklein.co.at/files/BrainfuckingIDE/latest.tar.bz2 "just use version of BrainfuckingIDE")
 Requirements
 ------------
 
