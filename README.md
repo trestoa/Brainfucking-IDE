@@ -61,7 +61,7 @@ For the just-use version only the Java Runtime Environment(java7!!!) is required
 License
 -------
 
-The Brainfucking IDE ist licensed under the [MIT License](http://mklein.co.at/license/ "MIT-License").
+The Brainfucking IDE ist licensed under the Gnu General Public License.
 
 Contact
 -------
