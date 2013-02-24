@@ -37,7 +37,7 @@ Else:
 
 1. First execute build.bat/build.sh. This little script will build the jar file.
 2. Now you should see an jar file named BrainfuckingIDE.jar. If not, execute the build.sh/build.bat again :D
-3. Execute the start.sh/start.bat file or execute the jar file an a other way.
+3. Execute the start.sh/start.bat file or execute the jar file an other way.
 
 For the GUI just start the start.bat for windows or the start.sh on unix. 
 If you prefer the Commandline/Shell and just want to execute one Brainfuck file type this:    
