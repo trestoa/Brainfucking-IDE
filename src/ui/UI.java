@@ -18,7 +18,7 @@ import ui.extras.TextGenerator;
 import main.BrainfuckingIDE;
 
 /**
- * Brainfucking IDE v1.1.0
+ * Brainfucking IDE v1.2.0
  *  
  * IDE/Interpreter for Brainfuck
  * Copyright (C) 2013  Markus Klein
@@ -54,6 +54,8 @@ public class UI implements ActionListener{
 	public static final String EMPTYFILE = "Untitled Brainfuck File";
 	public static final String INPUT = "input";
 	public static final String OPENTEXTGENERATOR = "openTextGenerator";
+	public static final String DEBUG = "debug";
+	public static final String STEPFORWARD = "steoForward";
 	
 	public String fileName = EMPTYFILE;	
 	public JFileChooser fileChooser;
@@ -79,7 +81,18 @@ public class UI implements ActionListener{
 		case RUN:
 			if(bF != null){
 				terminal.setVisible(true);
-				bF.prepareInterpret();
+				bF.prepareInterpret(false);
+			}
+			break;
+		case DEBUG:
+			if(bF != null){
+				terminal.setVisible(true);
+				bF.prepareInterpret(true);				
+			}
+			break;
+		case STEPFORWARD:
+			if(bF != null){
+				bF.interpret();
 			}
 			break;
 		case NEWFILE:
@@ -275,5 +288,13 @@ public class UI implements ActionListener{
 	
 	public void prepareForInput(){
 		terminal.setInputable(true);
+	}
+	
+	public void setDebugPos(int debugPos){
+		mainFrame.setDebugPos(debugPos);
+	}
+	
+	public void clearDebugging(){
+		mainFrame.clearDebugging();
 	}
 }

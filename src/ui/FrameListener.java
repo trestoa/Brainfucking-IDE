@@ -8,7 +8,7 @@ import java.awt.event.WindowListener;
 import java.awt.event.WindowStateListener;
 
 /**
- * Brainfucking IDE v1.1.0
+ * Brainfucking IDE v1.2.0
  *  
  * IDE/Interpreter for Brainfuck
  * Copyright (C) 2013  Markus Klein

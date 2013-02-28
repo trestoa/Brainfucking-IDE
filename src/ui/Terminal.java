@@ -21,7 +21,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- * Brainfucking IDE v1.1.0
+ * Brainfucking IDE v1.2.0
  *  
  * IDE/Interpreter for Brainfuck
  * Copyright (C) 2013  Markus Klein

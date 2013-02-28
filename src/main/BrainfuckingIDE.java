@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import ui.*;
 
 /**
- * Brainfucking IDE v1.1.0
+ * Brainfucking IDE v1.2.0
  *  
  * IDE/Interpreter for Brainfuck
  * Copyright (C) 2013  Markus Klein
@@ -44,6 +44,7 @@ public class BrainfuckingIDE{
 	private boolean consoleDebugging = false;
 	private Scanner buffer;
 	private UI UI;
+	private boolean uiDebugging;
 	
 	public static void main(String[] args){
 		System.out.println("starting...");
@@ -73,7 +74,7 @@ public class BrainfuckingIDE{
 		else{
 			buffer = new Scanner(System.in);
 			code = readCode(fileName);
-			prepareInterpret();
+			prepareInterpret(false);
 		}	
 	}
 	
@@ -121,7 +122,8 @@ public class BrainfuckingIDE{
 		}
 	}
 	
-	public void prepareInterpret(){
+	public void prepareInterpret(boolean uiDebugging ){
+		this.uiDebugging = uiDebugging;
 		System.out.println("prepare for interpreting...");
 		if(ui){
 			code = UI.getCode();
@@ -157,10 +159,17 @@ public class BrainfuckingIDE{
 		if(consoleDebugging){
 			System.out.println("code == {" + code + "}");
 		}
+		if(uiDebugging){
+			UI.setDebugPos(0);
+			return;
+		}
 		interpret();
 	}
 	
 	public void interpret(){
+		if(code == null){
+			return;
+		}
 		while(codePos < code.length()){
 			if(consoleDebugging){
 				System.out.println("Character: " + code.charAt(codePos));
@@ -339,13 +348,17 @@ public class BrainfuckingIDE{
 				System.out.println("memory @ memory pointer = " + memory[memPointer]);
 			}
 			codePos++;
+			if(uiDebugging){
+				if(codePos != code.length()){
+					UI.setDebugPos(codePos);
+					return;
+				}
+			}
 		}
 		if(consoleDebugging){
 			System.out.println("Nothing more to do.\nsuccess.");
 		}
-		if(codePos == code.length()){
-			doCleanup();
-		}
+		doCleanup();
 	}
 	
 	public void doCleanup(){
@@ -357,6 +370,9 @@ public class BrainfuckingIDE{
 		codePos = 0;
 		memPointer = 0;
 		memory = new short[0xFFFF];
+		if(uiDebugging){
+			UI.clearDebugging();
+		}
 		System.out.println("success");
 	}		
 	

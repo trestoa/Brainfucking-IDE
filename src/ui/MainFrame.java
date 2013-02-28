@@ -16,11 +16,17 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
 
 /**
- * Brainfucking IDE v1.1.0
+ * Brainfucking IDE v1.2.0
  *  
  * IDE/Interpreter for Brainfuck
  * Copyright (C) 2013  Markus Klein
@@ -46,16 +52,22 @@ public class MainFrame extends JFrame{
 	private JPanel mainPanel;
 	private JPanel iconPanel;
 	private JButton runButton;
+	private JButton debugButton;
 	private JButton stopButton;
+	private JButton stepButton;
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
 	private JMenuItem menuItem;
-	private JMenu windowMenu;
 	private JMenu extraMenu;
-	private JTextArea codeTextArea;
+	private JTextPane codeTextArea;
 	private JScrollPane codePane;
 	private TitledBorder codePaneBorder;
 	private FrameListener frameListener;
+	private final DefaultStyledDocument doc;
+	private StyleContext sc;
+	private final Style mainStyle;
+	private final Style debugCurrent;
+	private int lastDebugPos = 0;
 	
 	public MainFrame(String title){
 		super(title);
@@ -67,6 +79,34 @@ public class MainFrame extends JFrame{
 		this.addWindowStateListener(frameListener);
 		this.addWindowListener(frameListener);
 		
+		sc = new StyleContext();
+		doc = new DefaultStyledDocument(sc);
+		
+		Style defaultStyle = sc.getStyle(StyleContext.DEFAULT_STYLE);
+	    mainStyle = sc.addStyle("MainStyle", defaultStyle);
+	    StyleConstants.setFontFamily(mainStyle, "monospaced");
+	    StyleConstants.setFontSize(mainStyle, 12);
+
+	    debugCurrent = sc.addStyle("ConstantWidth", null);
+	    StyleConstants.setFontFamily(debugCurrent, "monospaced");
+	    StyleConstants.setForeground(debugCurrent, Color.green);
+	    StyleConstants.setBackground(debugCurrent, Color.BLACK);
+
+	    try {
+	      SwingUtilities.invokeAndWait(new Runnable() {
+	        public void run() {
+	          try {
+	            doc.setLogicalStyle(0, mainStyle);
+	            doc.insertString(0, "", null);
+	          } catch (BadLocationException e) {
+	          }
+	        }
+	      });
+	    } catch (Exception e) {
+	      System.out.println("Exception when constructing document: " + e);
+	      System.exit(1);
+	    }
+
 		mainPanel = new JPanel();
 		BorderLayout mainLayoutManager = new BorderLayout();
 		mainLayoutManager.setVgap(5);
@@ -79,7 +119,7 @@ public class MainFrame extends JFrame{
 		iconPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		mainPanel.add(iconPanel, BorderLayout.NORTH);
 		
-		codeTextArea = new JTextArea();
+		codeTextArea = new JTextPane(doc);
 		codePane = new JScrollPane(codeTextArea);
 		codePane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		codePaneBorder = BorderFactory.createTitledBorder(ui.UI.EMPTYFILE);
@@ -106,14 +146,33 @@ public class MainFrame extends JFrame{
 		iconPanel.add(runButton);
 		
 		iconPanel.add(Box.createRigidArea(new Dimension(5, 0)));
-		iconPanel.add(separator);
-		iconPanel.add(Box.createRigidArea(new Dimension(5, 0)));
 		
 		stopButton = new JButton(new ImageIcon("img/stop.png"));
 		stopButton.setMaximumSize(new Dimension(26, 26));
 		stopButton.setActionCommand(ui.UI.STOP);
 		stopButton.addActionListener(l);
+		stopButton.setToolTipText("stop");
 		iconPanel.add(stopButton);
+		
+		iconPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+		iconPanel.add(separator);
+		iconPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+		
+		debugButton = new JButton(new ImageIcon("img/debug.png"));
+		debugButton.setMaximumSize(new Dimension(26, 26));
+		debugButton.setActionCommand(ui.UI.DEBUG);
+		debugButton.setToolTipText("debug");
+		debugButton.addActionListener(l);
+		iconPanel.add(debugButton);
+		
+		iconPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+		
+		stepButton = new JButton(new ImageIcon("img/step.png"));
+		stepButton.setMaximumSize(new Dimension(26, 26));
+		stepButton.setActionCommand(ui.UI.STEPFORWARD);
+		stepButton.setToolTipText("step forward");
+		stepButton.addActionListener(l);
+		iconPanel.add(stepButton);
 		
 		menuBar = new JMenuBar();
 		this.setJMenuBar(menuBar);		
@@ -148,13 +207,6 @@ public class MainFrame extends JFrame{
 		menuItem.addActionListener(l);
 		menuItem.setActionCommand(ui.UI.OPENTEXTGENERATOR);
 		extraMenu.add(menuItem);
-		/* the Preferences are not implemented jet! 
-		windowMenu = new JMenu("Window");
-		menuBar.add(windowMenu);
-		menuItem = new JMenuItem("Preferences...");
-		windowMenu.add(menuItem);
-		stopButton.addActionListener(l);
-		stopButton.setActionCommand(main.UI.OPENPREFS);*/
 	}
 	
 	public void setNewFileName(String fileName){
@@ -174,5 +226,34 @@ public class MainFrame extends JFrame{
 	public void setSize(Dimension d){
 		super.setSize(d);
 		codePane.setPreferredSize(new Dimension(this.getWidth(), this.getHeight() - 105));
+	}
+	
+	public void setDebugPos(int debugPos){
+		doc.setCharacterAttributes(getRealPos(debugPos), 1, debugCurrent, false);
+		if(debugPos != 0){
+			doc.setCharacterAttributes(getRealPos(lastDebugPos), 1, mainStyle, true);
+		}
+		lastDebugPos = debugPos;
+	}
+	
+	private int getRealPos(int compiledPos){
+		String code = codeTextArea.getText();
+		int realPos = 0;
+		int comPos = 0;
+		for(;;){
+			if(comPos == compiledPos && (code.charAt(realPos) == '<' || code.charAt(realPos) == '>' || code.charAt(realPos) == '+' || code.charAt(realPos) == '-' || code.charAt(realPos) == ','  || code.charAt(realPos) == '.' || code.charAt(realPos) == '[' || code.charAt(realPos) == ']')){
+				return realPos;
+			}
+			if(code.charAt(realPos) == '<' || code.charAt(realPos) == '>' || code.charAt(realPos) == '+' || code.charAt(realPos) == '-' || code.charAt(realPos) == ','  || code.charAt(realPos) == '.' || code.charAt(realPos) == '[' || code.charAt(realPos) == ']'){
+				comPos++;
+			}
+			realPos++;
+		}
+				
+	}
+	
+	public void clearDebugging(){
+		String code = codeTextArea.getText();
+		doc.setCharacterAttributes(0, code.length(), mainStyle, true);
 	}
 }
