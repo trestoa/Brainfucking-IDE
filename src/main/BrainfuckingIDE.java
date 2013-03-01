@@ -131,12 +131,12 @@ public class BrainfuckingIDE{
 		String newCode = "";
 		if(code == null){
 			JOptionPane.showMessageDialog(null, "An Error occured - code == null",null ,JOptionPane.ERROR_MESSAGE);
-			doCleanup();
+			doCleanup(false);
 			return;
 		}
 		if(code.isEmpty()){
 			JOptionPane.showMessageDialog(null, "An Error occured - code == emtpy",null ,JOptionPane.ERROR_MESSAGE);
-			doCleanup();
+			doCleanup(false);
 			return;
 		}
 		System.out.print("compiling code...");
@@ -148,7 +148,7 @@ public class BrainfuckingIDE{
 		code = newCode;
 		if(code.isEmpty()){
 			JOptionPane.showMessageDialog(null, "An Error occured - The compiled Code is empty!!", null, JOptionPane.ERROR_MESSAGE);
-			doCleanup();
+			doCleanup(false);
 			return;
 		}
 		System.out.println("success");
@@ -176,7 +176,12 @@ public class BrainfuckingIDE{
 			}
 			switch(code.charAt(codePos)){
 			case '+':
-				memory[memPointer]++;
+				if(memory[memPointer] == Short.MAX_VALUE){
+					memory[memPointer] = 0;
+				}
+				else{
+					memory[memPointer]++;
+				}
 				if(consoleDebugging){
 					System.out.println("Action: incrementing the memory@memory pointer");
 				}
@@ -185,7 +190,12 @@ public class BrainfuckingIDE{
 				if(consoleDebugging){
 					System.out.println("Action: decrementing the memory@memory pointer");
 				}
-				memory[memPointer]--;
+				if(memory[memPointer] == 0){
+					memory[memPointer] = Short.MAX_VALUE;
+				}
+				else{
+					memory[memPointer]--;
+				}
 				break;
 			case '>':
 				if(consoleDebugging){
@@ -224,6 +234,7 @@ public class BrainfuckingIDE{
 				}
 				break;
 			case ',':
+				boolean vaildInput = false;
 				if(ui){
 					UI.prepareForInput();
 					codePos++;
@@ -241,7 +252,7 @@ public class BrainfuckingIDE{
 						}
 						catch(NumberFormatException e){
 							System.out.println("An error occured - can not convert your input to a number!");
-							doCleanup();
+							doCleanup(false);
 							return;
 						}
 					}
@@ -268,7 +279,7 @@ public class BrainfuckingIDE{
 						if(codePos == code.length()+1){
 							if(ui){
 								JOptionPane.showMessageDialog(null, "An Error occured - no loopend found", null, JOptionPane.ERROR_MESSAGE);
-								doCleanup();
+								doCleanup(false);
 								return;
 							}
 							else{
@@ -314,7 +325,7 @@ public class BrainfuckingIDE{
 						if(codePos == 0){
 							if(ui){
 								JOptionPane.showMessageDialog(null, "An Error occured - no loopstart found", null, JOptionPane.ERROR_MESSAGE);
-								doCleanup();
+								doCleanup(false);
 								return;
 							}
 							else{
@@ -358,10 +369,10 @@ public class BrainfuckingIDE{
 		if(consoleDebugging){
 			System.out.println("Nothing more to do.\nsuccess.");
 		}
-		doCleanup();
+		doCleanup(true);
 	}
 	
-	public void doCleanup(){
+	public void doCleanup(boolean succeed){
 		if(!ui){
 			System.out.println("\n\n");
 		}
@@ -372,6 +383,9 @@ public class BrainfuckingIDE{
 		memory = new short[0xFFFF];
 		if(uiDebugging){
 			UI.clearDebugging();
+		}
+		if(!succeed){
+			UI.resetTerminal();
 		}
 		System.out.println("success");
 	}		

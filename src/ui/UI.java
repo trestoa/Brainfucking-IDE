@@ -87,7 +87,7 @@ public class UI implements ActionListener{
 		case DEBUG:
 			if(bF != null){
 				terminal.setVisible(true);
-				bF.prepareInterpret(true);				
+				bF.prepareInterpret(true);	
 			}
 			break;
 		case STEPFORWARD:
@@ -148,10 +148,16 @@ public class UI implements ActionListener{
 			break;
 		case INPUT: 
 			terminal.setInputable(false);	
+			short input = terminal.getInput();
+			if(input == -1){
+				JOptionPane.showMessageDialog(null, "Wrong input, please try again!");
+				prepareForInput();
+				return;
+			}
 			bF.continueRunning(terminal.getInput());
 			break;
 		case STOP:
-			bF.doCleanup();
+			bF.doCleanup(true);
 			terminal.setInputable(false);
 			terminal.setVisible(false);
 			break;
@@ -296,5 +302,9 @@ public class UI implements ActionListener{
 	
 	public void clearDebugging(){
 		mainFrame.clearDebugging();
+	}
+	
+	public void resetTerminal(){
+		terminal.reset();
 	}
 }

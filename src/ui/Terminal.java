@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -134,17 +133,22 @@ public class Terminal extends JFrame implements ActionListener{
 			textInputArea.setText("");
 			return res;
 		}
-		else{
+		else if(!numberInputArea.getText().isEmpty()){
 			short res;
 			try{
 				res = Short.parseShort(numberInputArea.getText());
+				if(res < 0){
+					return -1;
+				}
 			}
 			catch(NumberFormatException x){
-				JOptionPane.showMessageDialog(null, "Error - your entered number was no number!!");
-				res = 0;
+				res = -1;
 			}
 			numberInputArea.setText("");
 			return res;
+		}
+		else{
+			return -1;
 		}
 	}
 
@@ -153,5 +157,10 @@ public class Terminal extends JFrame implements ActionListener{
 		if(e.getActionCommand() == "clear"){
 			mainTextArea.setText("");
 		}		
+	}
+	
+	public void reset(){
+		this.setVisible(false);
+		mainTextArea.setText("");
 	}
 }
