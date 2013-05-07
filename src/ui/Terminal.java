@@ -20,7 +20,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- * Brainfucking IDE v1.2.0
+ * Brainfucking IDE v1.3.0
  *  
  * IDE/Interpreter for Brainfuck
  * Copyright (C) 2013  Markus Klein
@@ -109,7 +109,7 @@ public class Terminal extends JFrame implements ActionListener{
 		frameListener.setUI(l);
 		inputButton = new JButton("ok");
 		inputButton.addActionListener(l);
-		inputButton.setActionCommand(ui.UI.INPUT);
+		inputButton.setActionCommand(Byte.toString(ui.UI.INPUT));
 		inputButton.setEnabled(false);
 		inputPanel.add(inputButton);
 	}

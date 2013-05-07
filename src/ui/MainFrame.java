@@ -26,7 +26,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
 /**
- * Brainfucking IDE v1.2.0
+ * Brainfucking IDE v1.3.0
  *  
  * IDE/Interpreter for Brainfuck
  * Copyright (C) 2013  Markus Klein
@@ -141,7 +141,7 @@ public class MainFrame extends JFrame{
 		runButton = new JButton(new ImageIcon("img/run.png"));
 		runButton.setMaximumSize(new Dimension(26, 26));
 		runButton.setToolTipText("run");
-		runButton.setActionCommand(ui.UI.RUN);
+		runButton.setActionCommand(Byte.toString(ui.UI.RUN));
 		runButton.addActionListener(l);
 		iconPanel.add(runButton);
 		
@@ -149,7 +149,7 @@ public class MainFrame extends JFrame{
 		
 		stopButton = new JButton(new ImageIcon("img/stop.png"));
 		stopButton.setMaximumSize(new Dimension(26, 26));
-		stopButton.setActionCommand(ui.UI.STOP);
+		stopButton.setActionCommand(Byte.toString(ui.UI.STOP));
 		stopButton.addActionListener(l);
 		stopButton.setToolTipText("stop");
 		iconPanel.add(stopButton);
@@ -160,7 +160,7 @@ public class MainFrame extends JFrame{
 		
 		debugButton = new JButton(new ImageIcon("img/debug.png"));
 		debugButton.setMaximumSize(new Dimension(26, 26));
-		debugButton.setActionCommand(ui.UI.DEBUG);
+		debugButton.setActionCommand(Byte.toString(ui.UI.DEBUG));
 		debugButton.setToolTipText("debug");
 		debugButton.addActionListener(l);
 		iconPanel.add(debugButton);
@@ -169,7 +169,7 @@ public class MainFrame extends JFrame{
 		
 		stepButton = new JButton(new ImageIcon("img/step.png"));
 		stepButton.setMaximumSize(new Dimension(26, 26));
-		stepButton.setActionCommand(ui.UI.STEPFORWARD);
+		stepButton.setActionCommand(Byte.toString(ui.UI.STEPFORWARD));
 		stepButton.setToolTipText("step forward");
 		stepButton.addActionListener(l);
 		iconPanel.add(stepButton);
@@ -179,25 +179,25 @@ public class MainFrame extends JFrame{
 		fileMenu = new JMenu("File");
 		menuBar.add(fileMenu);
 		menuItem = new JMenuItem("New Brainfuck File...");
-		menuItem.setActionCommand(ui.UI.NEWFILE);
+		menuItem.setActionCommand(Byte.toString(ui.UI.NEWFILE));
 		menuItem.addActionListener(l);
 		fileMenu.add(menuItem);
 		menuItem = new JMenuItem("Open Brainfuck File...");
-		menuItem.setActionCommand(ui.UI.OPENFILE);
+		menuItem.setActionCommand(Byte.toString(ui.UI.OPENFILE));
 		menuItem.addActionListener(l);
 		fileMenu.add(menuItem);
 		fileMenu.addSeparator();
 		menuItem = new JMenuItem("Save...");
-		menuItem.setActionCommand(ui.UI.SAVEFILE);
+		menuItem.setActionCommand(Byte.toString(ui.UI.SAVEFILE));
 		menuItem.addActionListener(l);
 		fileMenu.add(menuItem);
 		menuItem = new JMenuItem("Save as...");
-		menuItem.setActionCommand(ui.UI.SAVEFILEAS);
+		menuItem.setActionCommand(Byte.toString(ui.UI.SAVEFILEAS));
 		menuItem.addActionListener(l);
 		fileMenu.add(menuItem);
 		fileMenu.addSeparator();
 		menuItem = new JMenuItem("Exit...");
-		menuItem.setActionCommand(ui.UI.EXIT);
+		menuItem.setActionCommand(Byte.toString(ui.UI.EXIT));
 		menuItem.addActionListener(l);
 		fileMenu.add(menuItem);
 		
@@ -205,7 +205,7 @@ public class MainFrame extends JFrame{
 		menuBar.add(extraMenu);
 		menuItem = new JMenuItem("TextGenerator");
 		menuItem.addActionListener(l);
-		menuItem.setActionCommand(ui.UI.OPENTEXTGENERATOR);
+		menuItem.setActionCommand(Byte.toString(ui.UI.OPENTEXTGENERATOR));
 		extraMenu.add(menuItem);
 	}
 	

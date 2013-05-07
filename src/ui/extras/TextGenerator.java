@@ -17,7 +17,7 @@ import javax.swing.JTextArea;
 import ui.FrameListener;
 
 /**
- * Brainfucking IDE v1.1.0
+ * Brainfucking IDE v1.3.0
  *  
  * IDE/Interpreter for Brainfuck
  * Copyright (C) 2013  Markus Klein

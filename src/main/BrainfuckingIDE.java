@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import ui.*;
 
 /**
- * Brainfucking IDE v1.2.0
+ * Brainfucking IDE v1.3.0
  *  
  * IDE/Interpreter for Brainfuck
  * Copyright (C) 2013  Markus Klein

@@ -56,7 +56,7 @@ For the just-use version download [this](http://mklein.co.at/files/BrainfuckingI
 Requirements
 ------------
 
-For the just-use version only the Java Runtime Environment(java7!!!) is required. If you download the [repo](https://github.com/kleiinnn/Brainfucking-IDE "Github repo of Brainfucking IDE") from github you´ll need the JDK(at least 1.7.*) and the JDK binary folder must be added to the Path. 
+For the just-use version only the Java Runtime Environment(at least java 6) is required. If you download the [repo](https://github.com/kleiinnn/Brainfucking-IDE "Github repo of Brainfucking IDE") from github you´ll need the JDK(at least 1.7.*) and the JDK binary folder must be added to the Path. 
 
 License
 -------

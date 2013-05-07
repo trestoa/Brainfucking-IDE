@@ -18,7 +18,7 @@ import ui.extras.TextGenerator;
 import main.BrainfuckingIDE;
 
 /**
- * Brainfucking IDE v1.2.0
+ * Brainfucking IDE v1.3.0
  *  
  * IDE/Interpreter for Brainfuck
  * Copyright (C) 2013  Markus Klein
@@ -43,19 +43,19 @@ public class UI implements ActionListener{
 	public Terminal terminal;
 	private BrainfuckingIDE bF = null;
 	
-	public static final String RUN = "runInterpreting";
-	public static final String STOP = "stopInterpreting";
-	public static final String NEWFILE = "newFile";
-	public static final String OPENFILE = "openFile";
-	public static final String SAVEFILE = "save";
-	public static final String SAVEFILEAS = "saveAs";
-	public static final String EXIT = "exit";
-	public static final String OPENPREFS = "openPrefs";
+	public static final byte RUN = 1;
+	public static final byte STOP = 2;
+	public static final byte NEWFILE = 3;
+	public static final byte OPENFILE = 4;
+	public static final byte SAVEFILE = 5;
+	public static final byte SAVEFILEAS = 6;
+	public static final byte EXIT = 7;
+	public static final byte OPENPREFS = 8;
 	public static final String EMPTYFILE = "Untitled Brainfuck File";
-	public static final String INPUT = "input";
-	public static final String OPENTEXTGENERATOR = "openTextGenerator";
-	public static final String DEBUG = "debug";
-	public static final String STEPFORWARD = "steoForward";
+	public static final byte INPUT = 9;
+	public static final byte OPENTEXTGENERATOR = 10;
+	public static final byte DEBUG = 11;
+	public static final byte STEPFORWARD = 12;
 	
 	public String fileName = EMPTYFILE;	
 	public JFileChooser fileChooser;
@@ -76,7 +76,7 @@ public class UI implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String command = e.getActionCommand();
+		byte command = Byte.parseByte(e.getActionCommand());
 		switch(command){
 		case RUN:
 			if(bF != null){
